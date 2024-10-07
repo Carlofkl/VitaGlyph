@@ -1,4 +1,4 @@
-# Thin-Plate Spline-based Interpolation for Animation Line Inbetweening
+# VitaGlyph: Vitalizing Artistic Typography with Flexible Dual-branch Diffusion Models
 #### Kailai Feng, Yabo Zhang, Haodong Yu, Zhilong Ji, Jinfeng Bai, Hongzhi Zhang<sup>*</sup>, Wangmeng Zuo 
 This repository is the official PyTorch implementation of "VitaGlyph: Vitalizing Artistic Typography with Flexible Dual-branch Diffusion Models".
 
