@@ -33,11 +33,11 @@ def main(args):
     device = torch.device('cuda:{}'.format(args.device) if torch.cuda.is_available() else 'cpu')
 
     controlnet_scibble = ControlNetModel.from_pretrained(
-        "models/controlnet/models--lllyasviel--sd-controlnet-scribble/snapshots/864edcd5ccc6ee2695eeebea5b4512100c83e7b3", 
+        "/home/fkl/workspace/wordart/models/controlnet/models--lllyasviel--sd-controlnet-scribble/snapshots/864edcd5ccc6ee2695eeebea5b4512100c83e7b3", 
         torch_dtype=torch.float16
     )
     controlnet_seg = ControlNetModel.from_pretrained(
-        'models/controlnet/models--lllyasviel--sd-controlnet-seg/snapshots/ecdcb5645b5099c9a7500a504fb9ab3f743c4d96',
+        '/home/fkl/workspace/wordart/models/controlnet/models--lllyasviel--sd-controlnet-seg/snapshots/ecdcb5645b5099c9a7500a504fb9ab3f743c4d96',
         torch_dtype=torch.float16
     )
     
@@ -45,28 +45,28 @@ def main(args):
     controlnet_surr = [controlnet_scibble]
 
     sd_sub = StableDiffusionControlNetPipeline.from_pretrained(
-        '../train_lora/stablediffusion/models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9',
+        '/home/fkl/workspace/wordart/models/stablediffusion/models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9',
         controlnet= controlnet_sub,
         torch_dtype=torch.float16,
-    ).to(device=args.device)
+    ).to(device=device)
     sd_pipe = StableDiffusionControlNetsPipeline.from_pretrained(
-        '../train_lora/stablediffusion/models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9',
+        '/home/fkl/workspace/wordart/models/stablediffusion/models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9',
         controlnet= controlnet_surr,
         torch_dtype=torch.float16,
-    ).to(device=args.device)
+    ).to(device=device)
     
     sd_pipe.register_addl_models(sd_sub)
-    sd_pipe.schedule = DDIMScheduler_L
-    sd_pipe.load_lora_weights('loras', weight_name='vitaglyphy_1.safetensors')
+    sd_pipe.schedule = DDIMScheduler_L.from_config(sd_pipe.scheduler.config)
+    sd_pipe.load_lora_weights('loras', weight_name='vitaglyph_1.safetensors')
     sd_pipe.enable_xformers_memory_efficient_attention()
 
     # f
-    for folder in tqdm(os.path.join(args.input_folder, 'CCG')):
+    for folder in tqdm(os.listdir(os.path.join(args.input, 'CCG'))):
         output_folder = os.path.join(args.output, folder)
         os.makedirs(output_folder, exist_ok=True)
 
         # load prompts
-        with open(f'./{args.input}/LLM/{folder}.json', 'r') as file:
+        with open(f'{args.input}/LLM/{folder}.json', 'r') as file:
             sem = json.load(file)
             
         sub_prompt = sem['sub_prompt'] + args.positive_prompt
@@ -85,10 +85,10 @@ def main(args):
 
         # generate
         W, H = surr_image.size
-        seed = random.sample(range(100000), 1)
+        seed = random.sample(range(100000), 1)[0]
 
         img = sd_pipe(
-            prompt = [surr_prompt],
+            prompt = surr_prompt,
             image = [surr_image],
             height = H, 
             width = W, 
@@ -110,15 +110,15 @@ def main(args):
 
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     
-    parser = argparse.ArgumentParser(description='')
-    parser.add_argument('device', type=int, default=0, help='choose the device')
-    parser.add_argument('resulation', type=int, default=1024, help='define the output image resulation')
-    parser.add_argument('input', type=str, default='./outs', help='Input file')
-    parser.add_argument('output', type=str, default='./results', fhelp='Output file')
-    parser.add_argument('positive_prompt', type=str, default='complete, beautiful, elegant, artistic, easy background, plain background, simple background, clean background, easy layout, plain layout, simple layout, one, individual, sole, isolated, solitary, detached, alone, subjectival, planar, orderly, negative space')
-    parser.add_argument('negative_prompt', type=str, default='vignetting, Camera dark angle, bad, deformed, ugly, lousy anatomy, worst quality, low quality, jpeg artifacts, uplicate, morbid, mutilated, extra things, cut off, deformities, bad anatomy, bad proportions, deformed,blurry, stereoscopic, cluttered background, complex background, cluttered layout, complex layout, multiple, poly')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--device', type=int, default=0, help='choose the device')
+    parser.add_argument('--resulation', type=int, default=512, help='define the output image resulation')
+    parser.add_argument('--input', type=str, default='./outs', help='Input file')
+    parser.add_argument('--output', type=str, default='./results', help='Output file')
+    parser.add_argument('--positive_prompt', type=str, default='complete, beautiful, elegant, artistic, easy background, plain background, simple background, clean background, easy layout, plain layout, simple layout, one, individual, sole, isolated, solitary, detached, alone, subjectival, planar, orderly, negative space')
+    parser.add_argument('--negative_prompt', type=str, default='vignetting, Camera dark angle, bad, deformed, ugly, lousy anatomy, worst quality, low quality, jpeg artifacts, uplicate, morbid, mutilated, extra things, cut off, deformities, bad anatomy, bad proportions, deformed,blurry, stereoscopic, cluttered background, complex background, cluttered layout, complex layout, multiple, poly')
     args = parser.parse_args()
 
     main(args)
