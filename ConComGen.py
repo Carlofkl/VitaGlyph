@@ -73,14 +73,22 @@ def main(args):
         surr_prompt = sem['surr_prompt'] + args.positive_prompt
 
         # load images and mask
-        surr_image = load_image(os.path.join(args.input, 'CCG', folder, 'surr.jpg'))
-        surr_image = resize_image(surr_image, args.resulation)
+        sub_img_paths = []
+        for imgs in os.listdir(os.path.join(args.input, 'CCG', folder)):
+            if imgs.endswith('.jpg') and img[:3] == 'sub':
+                sub_img_paths.append(os.path.join(args.input, 'CCG', folder, img))
+        
+        # only sample one subject image, if want to sample more, modify the code
+        sub_img_path = random.sample(sub_img_paths, 1)[0]
 
-        sub_image = load_image(os.path.join(args.input, 'CCG', folder, 'sub.jpg'))
-        sub_image = resize_image(sub_image, args.resulation)
+        sub_image = load_image(sub_img_path)
+        sub_image = resize_image(sub_image, args.resolution)
+
+        surr_image = load_image(os.path.join(args.input, 'CCG', folder, 'surr.jpg'))
+        surr_image = resize_image(surr_image, args.resolution)
 
         mask = load_image(os.path.join(args.input, 'CCG', folder, 'mask.jpg')).convert('L')
-        mask = resize_image(mask, args.resulation)
+        mask = resize_image(mask, args.resolution)
         mask = transforms.ToTensor()(mask).squeeze().to(device=device)
 
         # generate
@@ -114,7 +122,7 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', type=int, default=0, help='choose the device')
-    parser.add_argument('--resulation', type=int, default=512, help='define the output image resulation')
+    parser.add_argument('--resolution', type=int, default=512, help='define the output image resolution')
     parser.add_argument('--input', type=str, default='./outs', help='Input file')
     parser.add_argument('--output', type=str, default='./results', help='Output file')
     parser.add_argument('--positive_prompt', type=str, default='complete, beautiful, elegant, artistic, easy background, plain background, simple background, clean background, easy layout, plain layout, simple layout, one, individual, sole, isolated, solitary, detached, alone, subjectival, planar, orderly, negative space')
