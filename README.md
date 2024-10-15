@@ -3,7 +3,7 @@
 This repository is the official PyTorch implementation of "VitaGlyph: Vitalizing Artistic Typography with Flexible Dual-branch Diffusion Models".
 
 ## ✨ News/TODO
-- [x] Source code of Controllable Compositional Generation.
+- [ ] Source code of Controllable Compositional Generation.
 - [x] Source code of Semantic Typography
 - [ ] Source code of Regional Decomposition
 - [ ] More results
@@ -70,7 +70,7 @@ This repository is the official PyTorch implementation of "VitaGlyph: Vitalizing
 ## ⚙️ Run inference demo
 1) Run the following command to get subject image and surrounding image.
 ``` shell
-python 
+
 ```
 2) Run the following command to pre-process subject image and surrounding image.
 ``` shell
@@ -78,7 +78,7 @@ python SemTypo.py --resolution 1024
 ```
 3) Run the following command to get final results.
 ``` shell
-python ConComGen.py --resolution 1024 
+
 ```
 
 <!-- You can change 'xN' to get arbitrary frame rates results. The reuslts are saved in the folder './output'. -->
