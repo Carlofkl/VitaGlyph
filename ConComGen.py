@@ -1,5 +1,3 @@
-
-
 import os
 import json
 import torch
@@ -13,7 +11,7 @@ from diffusers.utils import load_image
 from modules.scheduling_ddim_L import DDIMScheduler_L
 from modules.pipeline_controlnets_masks import StableDiffusionControlNetsPipeline
 
-
+ 
 def resize_image(input_image, res=512):
     W, H = input_image.size
     H, W = float(H), float(W)
