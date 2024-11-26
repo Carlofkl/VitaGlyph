@@ -3,56 +3,26 @@
 This repository is the official PyTorch implementation of "VitaGlyph: Vitalizing Artistic Typography with Flexible Dual-branch Diffusion Models".
 
 ## ✨ News/TODO
-- [ ] Source code of Controllable Compositional Generation.
+- [x] Source code of Controllable Compositional Generation.
 - [x] Source code of Semantic Typography
 - [ ] Source code of Regional Decomposition
+- [ ] Source code of whole pipeline and inference
 - [ ] More results
 
 
-<!-- 
+
 ## 🖼️ Resluts
 
-<table class="center">
-    <tr style="font-weight: bolder;text-align:center;">
-        <td>Input starting frame</td>
-        <td>Input ending frame</td>
-        <td>Inbetweening results</td>
-    </tr>
-  <tr>
-  <td>
-    <img src=assets/input1_0.png width="250">
-  </td>
-  <td>
-    <img src=assets/input1_1.png width="250">
-  </td>
-  <td>
-    <img src=assets/ours1.gif width="250">
-  </td>
-  </tr>
-  <tr>
-  <td>
-    <img src=assets/input2_0.png width="250">
-  </td>
-  <td>
-    <img src=assets/input2_1.png width="250">
-  </td>
-  <td>
-    <img src=assets/ours2.gif width="250">
-  </td>
-  </tr>
-  <tr>
-  <td>
-    <img src=assets/input3_0.png width="250">
-  </td>
-  <td>
-    <img src=assets/input3_1.png width="250">
-  </td>
-  <td>
-    <img src=assets/ours3.gif width="250">
-  </td>
-  </tr> 
-</table>
- -->
+<p align="center">
+    <img src="assets/first.png" alt="model architecture" width="800"/>
+    </br> Artistic Typogrophy <tr>
+</p>
+
+<p align="center">
+    <img src="assets/logo.png" alt="model architecture" width="800"/>
+    </br> Customized Logo Design  <tr>
+</p>
+
 
 ## 📖 Overview
 
