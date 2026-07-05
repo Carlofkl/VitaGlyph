@@ -2,6 +2,8 @@
 #### Kailai Feng, Yabo Zhang, Haodong Yu, Zhilong Ji, Jinfeng Bai, Hongzhi Zhang<sup>*</sup>, Wangmeng Zuo 
 This repository is the official PyTorch implementation of "VitaGlyph: Vitalizing Artistic Typography with Flexible Dual-branch Diffusion Models".
 
+Note: This project is unrelated to the original Vitaglyph (vitaglyph.com), an evolution/spacetime project by Greg. Please visit their site if you are looking for that work.
+
 ## ✨ News/TODO
 - [x] Source code of Controllable Compositional Generation.
 - [x] Source code of Semantic Typography
