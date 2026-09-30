@@ -1,0 +1,5 @@
+-r requirements-generation.txt
+fonttools==4.55.3
+torchvision==0.20.1
+controlnet-aux==0.0.9
+opencv-python==4.10.0.84

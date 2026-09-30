@@ -1,0 +1,10 @@
+# Tested final-generation environment. SemTypo's controlnet_aux is separate.
+torch==2.5.1
+diffusers==0.29.2
+transformers==4.44.2
+accelerate==0.34.2
+huggingface-hub==0.25.2
+peft==0.12.0
+safetensors==0.4.5
+Pillow==10.4.0
+numpy==1.26.4
